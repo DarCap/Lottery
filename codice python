@@ -1,0 +1,48 @@
+from encodings import utf_8
+import random
+import csv
+
+#inizializzo le liste
+combinazione=[]
+lista_90_numeri=[]
+giri=range(10)
+
+#inizializzo le variabili
+n=0
+mischio=0
+estraggo_n=0
+
+#creo lista di 90 numeri
+while len(lista_90_numeri)<90:
+    n=n+1
+    lista_90_numeri.append(n)
+
+#estraggo combinazione
+while len(combinazione)<6:
+
+    #setto la variabile mischio   
+    mischio=random.choice(giri)
+    
+    #mischio i 90 numeri
+    for i in range(mischio):
+        random.shuffle(lista_90_numeri)
+    
+    #estraggo un numero da lista_90_numeri e lo aggiungo a combinazione
+    estraggo_n=random.choice(lista_90_numeri)
+    lista_90_numeri.remove(estraggo_n)
+    combinazione.append(estraggo_n)
+
+combinazione.sort()
+ 
+#confronto combinazione con le combinazioni già uscite salvate in un file csv 
+with  open("ArchivioSuper.csv",'r', newline='',encoding='UTF-8') as csv :
+        riga=csv.readline().strip().split(';')
+        while len(riga[0])>0:
+            riga=csv.readline().strip().split(';')
+            if riga!=combinazione:
+                continue
+            else:
+                print('la combinazione è già uscita')
+                break
+        print(combinazione)            
+        csv.close()
